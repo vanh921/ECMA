@@ -1,5 +1,8 @@
 import { Toaster } from "react-hot-toast";
 import { Link } from "react-router-dom";
+import ListPage from "./pages/List";
+import { Routes, Route } from "react-router-dom";
+import Add from "./pages/Add";
 
 function App() {
   return (
@@ -38,6 +41,11 @@ function App() {
         <h1 className="text-4xl font-bold mb-4">Chào mừng đến với WEB501</h1>
         <p className="text-lg text-gray-600">Ứng dụng quản lý dữ liệu</p>
       </div>
+
+       <Routes>
+                <Route path="/" element={<ListPage />} />
+                <Route path="/add" element={<Add />} />
+            </Routes>
 
       <Toaster />
     </>
