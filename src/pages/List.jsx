@@ -36,6 +36,11 @@ function ListPage() {
             <td className="px-4 py-2 border border-gray-300">{item.id}</td>
             <td className="px-4 py-2 border border-gray-300">{item.name}</td>
             <td className="px-4 py-2 border border-gray-300">{item.price}</td>
+            <td className="px-4 py-2 border border-gray-300">
+              <button
+                onClick={() => handleDelete(item.id)}
+                className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition">Xóa</button>
+            </td>
           </tr>
         ))}
       </tbody>
