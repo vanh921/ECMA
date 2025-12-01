@@ -4,6 +4,8 @@ import ListPage from "./pages/List";
 import { Routes, Route } from "react-router-dom";
 import EditPage from "./pages/Edit";
 import AddPage from "./pages/Add";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function App() {
   return (
@@ -27,10 +29,10 @@ function App() {
           </div>
 
           <div className="hidden md:flex items-center space-x-6">
-            <Link to="#" className="hover:text-gray-200">
+            <Link to="/login" className="hover:text-gray-200">
               Đăng nhập
             </Link>
-            <Link to="#" className="hover:text-gray-200">
+            <Link to="/register" className="hover:text-gray-200">
               Đăng ký
             </Link>
           </div>
@@ -47,6 +49,8 @@ function App() {
                 <Route path="/" element={<ListPage />} />
                 <Route path="/add" element={<AddPage />} />
                 <Route path="/edit/:id" element={<EditPage />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
             </Routes>
 
       <Toaster />

@@ -19,12 +19,6 @@
       "image": "https://picsum.photos/400/300?random=3",
       "description": "Thành phố ngàn hoa với khí hậu mát mẻ quanh năm",
       "available": 10
-    },
-    {
-      "name": "da nang",
-      "price": 200000000,
-      "category": "Tour Quoc te",
-      "id": 5
     }
   ]
 }
