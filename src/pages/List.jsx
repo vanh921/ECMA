@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 function ListPage() {
    const [tours, setTours] = useState([]);
-
-
   useEffect(() => {
     const getTours = async () => {
     try {
@@ -11,10 +11,19 @@ function ListPage() {
       setTours(res.data)
     } catch (error) {
       console.log(error);
-    }
-    }
+    }}
     getTours()
 }, []);
+  const handleDelete = async id => {
+    if (confirm('Delete')) {
+      try {
+        await axios.delete('http://localhost:3000/tours/' + id);
+        setTours(tours.filter(tour => tour.id !== id));
+      } catch (error) {
+        toast.error(error);
+      }
+    }
+  };
 
   return (
     <div className="p-6">
@@ -37,9 +46,14 @@ function ListPage() {
             <td className="px-4 py-2 border border-gray-300">{item.name}</td>
             <td className="px-4 py-2 border border-gray-300">{item.price}</td>
             <td className="px-4 py-2 border border-gray-300">
-              <button
-                onClick={() => handleDelete(item.id)}
-                className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition">Xóa</button>
+             <div className="flex gap-2">
+                    <button onClick={() => handleDelete(item.id)}>
+                      Delete
+                    </button>
+                    <Link to={`/edit/${item.id}`}>
+                      <button>Edit</button>
+                    </Link>
+                  </div>
             </td>
           </tr>
         ))}
