@@ -1,72 +1,97 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
-import toast from "react-hot-toast";
-function ListPage() {
-   const [tours, setTours] = useState([]);
-  useEffect(() => {
-    const getTours = async () => {
+export default function ListPage() {
+  const [tours, setTours] = useState([]);
+
+  const fetchTours = async () => {
     try {
       const res = await axios.get("http://localhost:3000/tours");
-      setTours(res.data)
-    } catch (error) {
-      console.log(error);
-    }}
-    getTours()
-}, []);
-  const handleDelete = async id => {
-    if (confirm('Delete')) {
-      try {
-        await axios.delete('http://localhost:3000/tours/' + id);
-        setTours(tours.filter(tour => tour.id !== id));
-      } catch (error) {
-        toast.error(error);
-      }
+      setTours(res.data);
+    } catch (err) {
+      console.log("Lỗi lấy dữ liệu:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchTours();
+  }, []);
+
+  const handleDelete = async (id) => {
+    const ok = window.confirm("Bạn có chắc chắn muốn xóa?");
+    if (!ok) return;
+
+    try {
+      await axios.delete(`http://localhost:3000/tours/${id}`);
+      fetchTours();
+    } catch (err) {
+      console.log("Lỗi xóa:", err);
     }
   };
 
   return (
-    <div className="p-6">
-  <h1 className="text-2xl font-semibold mb-6">Danh sách Tours</h1>
+    <div className="max-w-5xl mx-auto mt-10 p-6 bg-white shadow-md rounded-xl">
+      <h2 className="text-3xl font-bold mb-6 text-center text-blue-600">
+        Danh sách Tours
+      </h2>
 
-  <div className="overflow-x-auto">
-    <table className="w-full border border-gray-300 rounded-lg">
-      <thead className="bg-gray-100">
-        <tr>
-          <th className="px-4 py-2 border border-gray-300 text-left">ID</th>
-          <th className="px-4 py-2 border border-gray-300 text-left">Tên tour</th>
-          <th className="px-4 py-2 border border-gray-300 text-left">Giá</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        {tours.map((item, index) => (
-          <tr key={item.id} className="hover:bg-gray-50">
-            <td className="px-4 py-2 border border-gray-300">{item.id}</td>
-            <td className="px-4 py-2 border border-gray-300">{item.name}</td>
-            <td className="px-4 py-2 border border-gray-300">{item.price}</td>
-            <td className="px-4 py-2 border border-gray-300">
-              <div className="flex gap-2">
-            <button
-            onClick={() => handleDelete(item.id)}
-            className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition">Delete
-            </button>
-
-            <Link to={`/edit/${item.id}`}>
-            <button
-            className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
-            Edit
-            </button>
-            </Link>
-              </div>
-            </td>
+      <table className="min-w-full bg-white rounded-lg overflow-hidden shadow">
+        <thead className="bg-blue-600 text-white">
+          <tr>
+            <th className="py-3 px-4 text-left">ID</th>
+            <th className="py-3 px-4 text-left">Tên tour</th>
+            <th className="py-3 px-4 text-left">Giá</th>
+            <th className="py-3 px-4 text-left">Danh mục</th>
+            <th className="py-3 px-4 text-center">Hành động</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-</div>
+        </thead>
+
+        <tbody>
+          {tours.map((tour, index) => (
+            <tr
+              key={tour.id}
+              className={`${
+                index % 2 === 0 ? "bg-gray-50" : "bg-white"
+              } hover:bg-gray-100 transition`}
+            >
+              <td className="py-3 px-4">{tour.id}</td>
+              <td className="py-3 px-4">{tour.name}</td>
+              <td className="py-3 px-4 text-green-600 font-semibold">
+                {tour.price.toLocaleString()}đ
+              </td>
+              <td className="py-3 px-4">{tour.category}</td>
+              <td className="flex gap-2">
+
+  <Link
+    to={`/edit/${tour.id}`}
+    className="px-3 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded"
+  >
+    Edit
+  </Link>
+
+  <button
+    onClick={() => handleDelete(tour.id)}
+    className="px-3 py-2 bg-red-500 hover:bg-red-600 text-white rounded"
+  >
+    Delete
+  </button>
+
+</td>
+            </tr>
+          ))}
+
+          {tours.length === 0 && (
+            <tr>
+              <td
+                colSpan="5"
+                className="text-center py-6 text-gray-500 italic"
+              >
+                Không có dữ liệu
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
   );
 }
-
-export default ListPage;
