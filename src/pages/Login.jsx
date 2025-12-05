@@ -1,61 +1,51 @@
-import axios from "axios";
 import { useState } from "react";
-import toast from "react-hot-toast";
+import axios from "axios";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async (event) => {
-    event.preventDefault(); // ngan can load form
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
     try {
-      const { data } = await axios.post("http://localhost:3000/login", {
+      const res = await axios.post("http://localhost:3000/login", {
         email,
         password,
       });
-      toast.success(" Đăng nhập thành công");
-      localStorage.setItem("token", data.accessToken);
-    } catch (error) {
-      toast.error(error.message);
+
+      // Lưu token vào localStorage
+      localStorage.setItem("token", res.data.accessToken);
+
+      alert("Đăng nhập thành công!");
+      console.log("Token:", res.data.accessToken);
+    } catch (err) {
+      console.log(err);
+      alert("Sai email hoặc mật khẩu");
     }
   };
+
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-semibold mb-6">Login</h1>
+      <h1 className="text-2xl mb-4 font-semibold">Login</h1>
 
-      <form className="space-y-6" onSubmit={handleSubmit}>
-        {/* Text input */}
-        <div>
-          <label htmlFor="text" className="block font-medium mb-1">
-            Email
-          </label>
-          <input
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            type="email"
-            id="text"
-            className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-        <div>
-          <label htmlFor="text" className="block font-medium mb-1">
-            Password
-          </label>
-          <input
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            type="password"
-            id="text"
-            className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
+      <form onSubmit={handleLogin} className="flex flex-col w-64 gap-3">
+        <input
+          type="email"
+          className="border p-2"
+          placeholder="Email..."
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-        {/* Submit button */}
-        <button
-          type="submit"
-          className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-        >
-          Submit
+        <input
+          type="password"
+          className="border p-2"
+          placeholder="Password..."
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <button className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
+          Login
         </button>
       </form>
     </div>

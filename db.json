@@ -41,6 +41,16 @@
       "email": "vietanh1234@gmail.com",
       "password": "$2a$10$tFNcyoWZcMdL/z3wwFEJFudWDxuuNWcNNHBegrRvQ7Ah/fi1nBRxK",
       "id": 4
+    },
+    {
+      "email": "vietanhh123@gmail.com",
+      "password": "$2a$10$UPqEeDYHwkealb8VgDnJ4OfzRo2B3E9XJQC32IYI8N9.JtAoAG3Nu",
+      "id": 5
+    },
+    {
+      "email": "viet1@gmail.com",
+      "password": "$2a$10$PbIiuqL8rkpSAvBo7fVWi.00ZDUH9hh0uqOH.YQ/B3wq2AA/Uv2tG",
+      "id": 6
     }
   ]
 }
