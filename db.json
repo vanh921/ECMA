@@ -20,5 +20,27 @@
       "description": "Thành phố ngàn hoa với khí hậu mát mẻ quanh năm",
       "available": 10
     }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "email": "",
+      "password": ""
+    },
+    {
+      "email": "vietanhpham9211@gmail.com",
+      "password": "$2a$10$weo8MkW7j3x1ETEbBbDbC.oAWqtptt4dyU.lAfzqX1PGW6rDXHBfW",
+      "id": 2
+    },
+    {
+      "email": "hv510958@gmail.com",
+      "password": "$2a$10$k5AGEMj9s2lT2o2JM/MBhuHPvLGwxx1J3PY9YRHGWWQlmVYL0mLYy",
+      "id": 3
+    },
+    {
+      "email": "vietanh1234@gmail.com",
+      "password": "$2a$10$tFNcyoWZcMdL/z3wwFEJFudWDxuuNWcNNHBegrRvQ7Ah/fi1nBRxK",
+      "id": 4
+    }
   ]
 }
